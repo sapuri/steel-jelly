@@ -20,12 +20,12 @@ func NewClient() Client {
 	return &clientImpl{}
 }
 
-func (p *clientImpl) GetThumbnailURLs(videoURL string) ([]string, error) {
+func (c *clientImpl) GetThumbnailURLs(videoURL string) ([]string, error) {
 	const imageNum = 16
 
 	ret := make([]string, 0, imageNum)
 
-	u, err := p.getThumbnailURL(videoURL)
+	u, err := c.getThumbnailURL(videoURL)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (p *clientImpl) GetThumbnailURLs(videoURL string) ([]string, error) {
 	return ret, nil
 }
 
-func (p *clientImpl) getThumbnailURL(videoURL string) (string, error) {
+func (c *clientImpl) getThumbnailURL(videoURL string) (string, error) {
 	res, err := http.Get(videoURL)
 	if err != nil {
 		return "", err
