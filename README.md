@@ -1,12 +1,12 @@
 # steel-jelly
 
 ## Installation
-```bash
+```
 go get github.com/sapuri/steel-jelly/steeljelly
 ```
 
 (optional) To run unit tests:
-```bash
+```
 make generate
 make test
 ```
