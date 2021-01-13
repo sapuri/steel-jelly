@@ -1,18 +1,3 @@
-# steel-jelly
-
-## Installation
-```bash
-go get github.com/sapuri/steel-jelly/steeljelly
-```
-
-(optional) To run unit tests:
-```bash
-make generate
-make test
-```
-
-## Examples
-```go
 package main
 
 import (
@@ -34,4 +19,3 @@ func main() {
 	// https://ei.phncdn.com/videos/202010/01/356624402/original/(m=eaAaGwObaaaa)(mh=3zxiu3wi3w-_5ZlG)1.jpg
 	fmt.Println(res[0])
 }
-```
