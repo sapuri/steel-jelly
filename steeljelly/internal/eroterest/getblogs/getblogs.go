@@ -9,13 +9,9 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocarina/gocsv"
-	"github.com/sapuri/steel-jelly/steeljelly/internal/eroterest/getlinks"
+	eroterest_errs "github.com/sapuri/steel-jelly/steeljelly/internal/eroterest/errors"
+	eroterest_types "github.com/sapuri/steel-jelly/steeljelly/internal/eroterest/types"
 )
-
-type Blog struct {
-	Link     string `csv:"link"`
-	SiteName string `csv:"site_name"`
-}
 
 type GetBlogsInteractor struct {
 	inputFilePath  string
@@ -38,12 +34,12 @@ func (it *GetBlogsInteractor) Invoke() error {
 		_ = file.Close()
 	}()
 
-	var links []*getlinks.Link
+	var links []*eroterest_types.Link
 	if err := gocsv.UnmarshalFile(file, &links); err != nil {
 		return err
 	}
 
-	var blogs []*Blog
+	var blogs []*eroterest_types.Blog
 	for _, link := range links {
 		fmt.Println(link.Link)
 		blog, err := it.scrape(link.Link, link.SiteName)
@@ -62,7 +58,7 @@ func (it *GetBlogsInteractor) Invoke() error {
 	return nil
 }
 
-func (it *GetBlogsInteractor) scrape(targetURL string, siteName string) (blog *Blog, err error) {
+func (it *GetBlogsInteractor) scrape(targetURL string, siteName string) (blog *eroterest_types.Blog, err error) {
 	client := http.DefaultClient
 	req, err := http.NewRequest(http.MethodGet, targetURL, nil)
 	if err != nil {
@@ -80,7 +76,7 @@ func (it *GetBlogsInteractor) scrape(targetURL string, siteName string) (blog *B
 
 	if res.StatusCode != http.StatusOK {
 		if res.StatusCode == http.StatusNotFound {
-			err = ErrPageNotFound
+			err = eroterest_errs.ErrPageNotFound
 			return
 		}
 		err = fmt.Errorf("returned %d from targetURL", res.StatusCode)
@@ -98,13 +94,13 @@ func (it *GetBlogsInteractor) scrape(targetURL string, siteName string) (blog *B
 		return
 	}
 
-	return &Blog{
+	return &eroterest_types.Blog{
 		Link:     link,
 		SiteName: siteName,
 	}, nil
 }
 
-func (it *GetBlogsInteractor) export(filePath string, blogs []*Blog) error {
+func (it *GetBlogsInteractor) export(filePath string, blogs []*eroterest_types.Blog) error {
 	file, _ := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, os.ModePerm)
 	defer func() {
 		_ = file.Close()

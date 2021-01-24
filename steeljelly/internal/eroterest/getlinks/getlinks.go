@@ -9,16 +9,13 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocarina/gocsv"
+	eroterest_errs "github.com/sapuri/steel-jelly/steeljelly/internal/eroterest/errors"
+	eroterest_types "github.com/sapuri/steel-jelly/steeljelly/internal/eroterest/types"
 )
 
 type GetLinksInteractor struct {
 	OutputFilePath string
 	PageNum        int
-}
-
-type Link struct {
-	Link     string `csv:"link"`
-	SiteName string `csv:"site_name"`
 }
 
 func NewGetLinksInteractor(outputFilePath string, pageNum int) *GetLinksInteractor {
@@ -30,7 +27,7 @@ func NewGetLinksInteractor(outputFilePath string, pageNum int) *GetLinksInteract
 
 func (it *GetLinksInteractor) Invoke() error {
 	const baseURL = "https://movie.eroterest.net/site/"
-	var output []*Link
+	var output []*eroterest_types.Link
 
 	for i := 1; i <= it.PageNum; i++ {
 		targetURL := fmt.Sprintf("%s?site_name=&page=%d", baseURL, i)
@@ -38,7 +35,7 @@ func (it *GetLinksInteractor) Invoke() error {
 
 		links, err := it.scrape(targetURL)
 		if err != nil {
-			if err == ErrPageNotFound {
+			if err == eroterest_errs.ErrPageNotFound {
 				break
 			}
 			return err
@@ -56,7 +53,7 @@ func (it *GetLinksInteractor) Invoke() error {
 	return nil
 }
 
-func (it *GetLinksInteractor) scrape(targetURL string) (links []*Link, err error) {
+func (it *GetLinksInteractor) scrape(targetURL string) (links []*eroterest_types.Link, err error) {
 	client := http.DefaultClient
 	req, err := http.NewRequest(http.MethodGet, targetURL, nil)
 	if err != nil {
@@ -74,7 +71,7 @@ func (it *GetLinksInteractor) scrape(targetURL string) (links []*Link, err error
 
 	if res.StatusCode != http.StatusOK {
 		if res.StatusCode == http.StatusNotFound {
-			err = ErrPageNotFound
+			err = eroterest_errs.ErrPageNotFound
 			return
 		}
 		err = fmt.Errorf("returned %d from targetURL", res.StatusCode)
@@ -96,7 +93,7 @@ func (it *GetLinksInteractor) scrape(targetURL string) (links []*Link, err error
 		a := s.Find("a")
 		link, exists := a.Attr("href")
 		if exists {
-			links = append(links, &Link{
+			links = append(links, &eroterest_types.Link{
 				Link:     link,
 				SiteName: a.Text(),
 			})
@@ -106,7 +103,7 @@ func (it *GetLinksInteractor) scrape(targetURL string) (links []*Link, err error
 	return
 }
 
-func (it *GetLinksInteractor) export(filePath string, links []*Link) error {
+func (it *GetLinksInteractor) export(filePath string, links []*eroterest_types.Link) error {
 	file, _ := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, os.ModePerm)
 	defer func() {
 		_ = file.Close()

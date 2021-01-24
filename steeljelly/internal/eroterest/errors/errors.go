@@ -1,4 +1,4 @@
-package getblogs
+package errors
 
 import "errors"
 
