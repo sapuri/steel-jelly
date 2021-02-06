@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"github.com/sapuri/steel-jelly/steeljelly/internal/eroterest"
+	"github.com/sapuri/steel-jelly/steeljelly/eroterest"
 	"github.com/urfave/cli/v2"
 )
 

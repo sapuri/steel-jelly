@@ -5,7 +5,7 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/sapuri/steel-jelly/steeljelly"
-	"github.com/sapuri/steel-jelly/steeljelly/internal/pornhub"
+	"github.com/sapuri/steel-jelly/steeljelly/pornhub"
 )
 
 func TestNewClient(t *testing.T) {

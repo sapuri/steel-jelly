@@ -9,8 +9,8 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocarina/gocsv"
-	eroterest_errs "github.com/sapuri/steel-jelly/steeljelly/internal/eroterest/errors"
-	eroterest_types "github.com/sapuri/steel-jelly/steeljelly/internal/eroterest/types"
+	eroterest_errs "github.com/sapuri/steel-jelly/steeljelly/eroterest/errors"
+	eroterest_types "github.com/sapuri/steel-jelly/steeljelly/eroterest/types"
 )
 
 type GetBlogsInteractor struct {
