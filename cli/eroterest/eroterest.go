@@ -1,14 +1,14 @@
-package cli
+package eroterest
 
 import (
 	"github.com/sapuri/steel-jelly/steeljelly/eroterest"
 	"github.com/urfave/cli/v2"
 )
 
-func newEroterestCmd() *cli.Command {
+func NewEroterestCmd() *cli.Command {
 	return &cli.Command{
 		Name:  "eroterest",
-		Usage: "エロタレスト用のコマンド",
+		Usage: "エロタレスト",
 		Subcommands: []*cli.Command{
 			newGetBlogsCmd(),
 			newGetLinksCmd(),
