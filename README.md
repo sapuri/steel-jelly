@@ -1,8 +1,14 @@
 # steel-jelly
 
 ## Installation
+### Library
 ```
 go get github.com/sapuri/steel-jelly/steeljelly
+```
+
+### CLI
+```
+go get github.com/sapuri/steel-jelly/cmd/steeljelly
 ```
 
 (optional) To run unit tests:
