@@ -3,7 +3,7 @@ package steeljelly
 import (
 	"errors"
 
-	"github.com/sapuri/steel-jelly/steeljelly/internal/pornhub"
+	"github.com/sapuri/steel-jelly/steeljelly/pornhub"
 )
 
 type Client interface {

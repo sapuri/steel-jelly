@@ -1,8 +1,8 @@
 package eroterest
 
 import (
-	"github.com/sapuri/steel-jelly/steeljelly/internal/eroterest/getblogs"
-	"github.com/sapuri/steel-jelly/steeljelly/internal/eroterest/getlinks"
+	"github.com/sapuri/steel-jelly/steeljelly/eroterest/getblogs"
+	"github.com/sapuri/steel-jelly/steeljelly/eroterest/getlinks"
 )
 
 type Client interface {

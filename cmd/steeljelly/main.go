@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/sapuri/steel-jelly/steeljelly/cli"
+	"github.com/sapuri/steel-jelly/cli"
 )
 
 func main() {
