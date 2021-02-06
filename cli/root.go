@@ -3,6 +3,8 @@ package cli
 import (
 	"os"
 
+	"github.com/sapuri/steel-jelly/cli/eroterest"
+	"github.com/sapuri/steel-jelly/cli/pornhub"
 	"github.com/urfave/cli/v2"
 )
 
@@ -12,6 +14,7 @@ func Run() error {
 
 func NewCmdRoot() *cli.App {
 	cmd := cli.NewApp()
+	cmd.Usage = "A CLI tool for porn sites"
 	cmd.Version = Version
 	cmd.Commands = rootSubCommands()
 	return cmd
@@ -19,6 +22,7 @@ func NewCmdRoot() *cli.App {
 
 func rootSubCommands() []*cli.Command {
 	return []*cli.Command{
-		newEroterestCmd(),
+		eroterest.NewEroterestCmd(),
+		pornhub.NewPornhubCmd(),
 	}
 }
